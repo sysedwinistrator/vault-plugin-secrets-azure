@@ -36,7 +36,8 @@ const (
 	azureChinaCloudEnvName  = "AZURECHINACLOUD"
 	azureUSGovCloudEnvName  = "AZUREUSGOVERNMENTCLOUD"
 
-	errInvalidApplicationObject = "does not reference a valid application object"
+	errInvalidApplicationObject    = "does not reference a valid application object"
+	errReferencePropertyNotPresent = "one of its queried reference-property objects are not present"
 )
 
 // client offers higher level Azure operations that provide a simpler interface
@@ -102,6 +103,7 @@ func (c *client) createSP(
 			retryable :=
 				strings.Contains(errStr, "local tenant") ||
 					strings.Contains(errStr, errInvalidApplicationObject) ||
+					strings.Contains(errStr, errReferencePropertyNotPresent) ||
 					strings.Contains(errStr, "authorization_requestdenied") ||
 					strings.Contains(errStr, "propagation") ||
 					strings.Contains(errStr, "please try again") ||
